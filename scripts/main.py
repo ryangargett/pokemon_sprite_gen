@@ -9,7 +9,6 @@ def sanitize_deduplicate_filename(
     output_path: str = "."
 ) -> str:
     file_name = re.sub(r"[<>:'/\\|?*]", "_", prompt)
-    file_name = file_name.replace(" ", "_")[:50] # limit to 50 characters to preserve filespace
         
     os.makedirs(output_path, exist_ok=True)
 
@@ -40,9 +39,11 @@ def generate(prompt: str):
         "sWizad/pokemon-trainer-sprite-pixelart",
         weight_name="pk_trainer_xl_v1.safetensors"
     )
+    
+    modified_prompt = ",".join([prompt, "simple background", "pokemon trainer"])
 
-    image = pipeline(prompt).images[0]
-    image.save(f"{sanitize_deduplicate_filename(prompt)}.png")
+    image = pipeline(modified_prompt).images[0]
+    image.save(f"{sanitize_deduplicate_filename(prompt)}")
     
 if __name__ == "__main__":
     if len(sys.argv) < 2:
