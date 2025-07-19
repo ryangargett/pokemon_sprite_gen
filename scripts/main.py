@@ -9,7 +9,7 @@ def sanitize_deduplicate_filename(
     output_path: str = "."
 ) -> str:
     file_name = re.sub(r"[<>:'/\\|?*]", "_", prompt)
-    file_name = file_name.replace(" ", "_")[:50]\
+    file_name = file_name.replace(" ", "_")[:50] # limit to 50 characters to preserve filespace
         
     os.makedirs(output_path, exist_ok=True)
 
